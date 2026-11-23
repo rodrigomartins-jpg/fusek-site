@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Área do Cliente | Fušek</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#353E47; --g2:#262C32;
+  --y:#F5D319; --oc:#A78E10;
+  --bg:#F4F5F6; --card:#FFFFFF; --line:#E2E5E8;
+  --ink:#353E47; --soft:#5E6872;
+  --r-lg:24px; --r-md:18px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Sora",sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.header{padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid var(--line)}
+.brand{font-weight:600;font-size:18px}
+.logout{background:none;border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer;font-size:14px}
+.container{max-width:720px;margin:40px auto;padding:0 20px}
+.card{background:var(--card);border-radius:var(--r-lg);padding:32px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -12px rgba(0,0,0,.12)}
+h1{font-size:28px;font-weight:600;margin:0 0 8px}
+.sub{color:var(--soft);margin-bottom:28px}
+input,button{font-family:inherit;font-size:15px}
+input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:12px;margin-bottom:12px}
+.btn{width:100%;padding:14px;background:var(--g);color:#fff;border:none;border-radius:999px;font-weight:500;cursor:pointer}
+.btn:hover{background:var(--g2)}
+.chat{margin-top:32px}
+.messages{min-height:200px;max-height:400px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:#fafafa}
+.msg{margin-bottom:12px;padding:10px 14px;border-radius:12px;max-width:80%}
+.msg.user{background:#e8f0fe;margin-left:auto}
+.msg.ai{background:#fff;border:1px solid var(--line)}
+.input-row{display:flex;gap:8px}
+.input-row input{margin:0}
+.input-row button{width:auto;padding:0 24px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="brand">Fušek</div>
+  <button class="logout" id="logoutBtn" onclick="logout()">Sair</button>
+</header>
+
+<div class="container">
+  <div class="card" id="loginCard">
+    <h1>Área do Cliente</h1>
+    <p class="sub">Acesse os números da sua empresa.</p>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="E-mail" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <button type="submit" class="btn">Entrar</button>
+    </form>
+  </div>
+
+  <div class="card hidden" id="chatCard">
+    <h1>Consulta</h1>
+    <p class="sub">Pergunte sobre caixa, resultado ou indicadores do período validado.</p>
+    <div class="messages" id="messages"></div>
+    <div class="input-row">
+      <input type="text" id="pergunta" placeholder="Ex: Qual foi a margem bruta em outubro?">
+      <button class="btn" onclick="enviar()">Enviar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://otltdvbkqvamgfgheyxi.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_VpjkyR7t0nIU3qFY-smHIw_50aSaHhM';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const loginCard = document.getElementById('loginCard');
+const chatCard = document.getElementById('chatCard');
+const messages = document.getElementById('messages');
+
+document.getElementById('loginForm').onsubmit = async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const btn = e.target.querySelector('button');
+  btn.disabled = true;
+  btn.textContent = 'Entrando…';
+  try {
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) {
+      alert('Erro: ' + error.message);
+      console.error(error);
+    } else {
+      loginCard.classList.add('hidden');
+      chatCard.classList.remove('hidden');
+    }
+  } catch (err) {
+    alert('Falha na conexão: ' + err.message);
+    console.error(err);
+  }
+  btn.disabled = false;
+  btn.textContent = 'Entrar';
+};
+
+async function logout() {
+  await sb.auth.signOut();
+  location.reload();
+}
+
+async function enviar() {
+  const input = document.getElementById('pergunta');
+  const pergunta = input.value.trim();
+  if (!pergunta) return;
+  input.value = '';
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = pergunta;
+  messages.appendChild(userMsg);
+
+  const session = await sb.auth.getSession();
+  const token = session.data.session?.access_token;
+
+  const periodId = '22222222-2222-2222-2222-222222222222';
+
+  const res = await fetch('/.netlify/functions/chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ pergunta, periodId })
+  });
+  const json = await res.json();
+
+  const aiMsg = document.createElement('div');
+  aiMsg.className = 'msg ai';
+  aiMsg.textContent = json.resposta || 'Erro ao consultar.';
+  messages.appendChild(aiMsg);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) {
+    loginCard.classList.add('hidden');
+    chatCard.classList.remove('hidden');
+  }
+});
+</script>
+</body>
+</html>

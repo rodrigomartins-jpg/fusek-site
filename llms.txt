@@ -1,0 +1,37 @@
+# Fušek
+
+> A Fušek é uma consultoria em Gestão Financeira e Geração de Valor para empresas de médio porte no Brasil. Conduzida por Rodrigo dos Santos Martins (CRC SP, 18 anos em controladoria de companhias abertas e multinacionais), atua em três frentes: rotina financeira, gestão financeira e estratégia financeira. O trabalho começa pelo Diagnóstico de Maturidade Financeira, que situa a empresa em três fases — Clareza, Previsibilidade e Direção — e define por onde começar.
+
+A Fušek não faz escrituração contábil ou fiscal (isso continua com o contador da empresa). O foco é leitura gerencial, previsão de caixa de 13 semanas, capital de giro, margem e preparação de decisões para sócios, diretoria e conselho.
+
+Termos-chave:
+- Curva de Maturidade Financeira: modelo próprio em 3 fases (Clareza → Previsibilidade → Direção).
+- Diagnóstico de Maturidade Financeira: avaliação inicial gratuita (questionário, sem envio de dados) + diagnóstico pago com dados reais.
+- Previsão de caixa de 13 semanas: painel de curto prazo com saldo projetado e semanas de pressão.
+- Ciclo de conversão de caixa e capital de giro: onde o caixa fica preso em recebíveis, estoque e prazos.
+
+## Ofertas e entrada
+
+- [Avaliação inicial (questionário)](https://fusek.com.br/): Primeira leitura gratuita sobre Clareza, Previsibilidade e Direção. Não exige balancete nem extrato.
+- [Diagnóstico de Maturidade Financeira](https://fusek.com.br/): Aprofundamento com dados reais, causas e prioridades. Porta de entrada para o acompanhamento mensal.
+- [Curva de Maturidade Financeira (página canônica)](https://fusek.com.br/curva): Definição oficial do modelo em três fases (Clareza → Previsibilidade → Direção) e como o Diagnóstico a utiliza.
+- [Página principal](https://fusek.com.br/): Visão completa das três frentes, Curva de Maturidade e simulador de impacto de margem e prazo de recebimento.
+
+## Insights e estudos
+
+- [Insights](https://fusek.com.br/insights/): Estudos e análises sobre caixa, margem e decisão em empresas brasileiras.
+- [Seu prazo de recebimento subiu 4 dias. Quanto caixa isso consumiu?](https://fusek.com.br/insights/prazo-de-recebimento-4-dias/): Exemplo de cálculo: 1 dia de prazo ≈ R$ 100 mil em empresa de R$ 3 milhões/mês a prazo.
+- [A armadilha do crescimento (distribuidoras)](https://fusek.com.br/insights/): Estudo setorial sobre capital exigido pelo crescimento em distribuidoras de médio porte.
+
+## Contato e dados da empresa
+
+- Site: https://fusek.com.br/
+- WhatsApp: https://wa.me/5511918985095
+- CNPJ: 69.019.912/0001-01
+- Endereço: Av. Pres. Juscelino Kubitschek, 2041, 5º andar, Vila Olímpia, São Paulo/SP
+- LinkedIn: https://www.linkedin.com/company/fusek
+
+## Optional
+
+- [Política de privacidade](https://fusek.com.br/privacidade/)
+- [ScoreApp – Avaliação de maturidade](https://maturidade-financeira.scoreapp.com/)
